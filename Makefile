@@ -3,3 +3,6 @@ install:
 
 run:
 	uv run gendiff -h
+
+package:
+	pip install -e .
