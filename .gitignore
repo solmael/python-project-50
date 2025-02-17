@@ -4,5 +4,6 @@ dist/
 *.pyc
 .venv
 .coverage
+.python-version
 coverage.xml
 *_cache/
