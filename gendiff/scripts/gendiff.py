@@ -1,4 +1,5 @@
 import argparse
+from gendiff import generate_diff
 
 def main():
     parser = argparse.ArgumentParser(
@@ -8,20 +9,18 @@ def main():
         add_help=True
     )
 
-    parser.add_argument("first_file", help="Path to the first configuration file")
-    parser.add_argument("second_file", help="Path to the second configuration file")
+    parser.add_argument("first_file", 
+                        help="Path to the first configuration file")
+    parser.add_argument("second_file", 
+                        help="Path to the second configuration file")
 
     parser.add_argument(
-        "-f", "--format", 
-        #  choices=["stylish", "plain", "json"],
-        #  default="stylish",
-        help="set format of output"
+        "-f", "--format"
     )
 
     args = parser.parse_args()
-
-    print(f"Comparing {args.first_file} and {args.second_file}")
-    print(f"Output format: {args.format}")
+    diff = generate_diff(args.first_file, args.second_file)
+    print(diff)
 
 if __name__ == "__main__":
     main()
