@@ -6,3 +6,6 @@ run:
 
 package:
 	pip install -e .
+
+lint:
+	uv run ruff check
