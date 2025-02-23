@@ -14,5 +14,4 @@ test:
 	uv run pytest
 
 test-coverage:
-	coverage run -m pytest
-    coverage xml
+	pytest --cov=gendiff --cov-report xml
