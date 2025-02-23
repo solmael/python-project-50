@@ -10,7 +10,8 @@ def read_file(file_name):
         return f.read().strip()
 
 @pytest.mark.parametrize("file1, file2, expected_output", [
-    ('file1.json', 'file2.json', 'expected_json.txt')])
+    ('file1.json', 'file2.json', 'expected_json.txt'),
+    ('file1.yml', 'file2.yml', 'expected_yaml.txt')])
 
 def test_generate_diff(file1, file2, expected_output):
     file1_path = os.path.join(FIXTURES_PATH, file1)
