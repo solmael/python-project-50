@@ -9,3 +9,9 @@ package:
 
 lint:
 	uv run ruff check
+
+test:
+	uv run pytest
+
+test-coverage:
+	coverage run -m pytest
