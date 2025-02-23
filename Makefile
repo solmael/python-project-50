@@ -15,3 +15,4 @@ test:
 
 test-coverage:
 	coverage run -m pytest
+    coverage xml
