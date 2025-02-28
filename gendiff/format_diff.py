@@ -26,14 +26,23 @@ def format_stylish(diff, depth=0):
             
         elif node['type'] == 'removed':
             value = format_value(node['old_value'], depth + 1)
-            lines.append(f'{indent}  - {key}: {value}')
+            if value == '':
+                lines.append(f'{indent}  - {key}:')
+            else:
+                lines.append(f'{indent}  - {key}: {value}')
             
         elif node['type'] == 'changed':
             old_value = format_value(node['old_value'], depth + 1)
             new_value = format_value(node['new_value'], depth + 1)
-            lines.append(f'{indent}  - {key}: {old_value}')
-            lines.append(f'{indent}  + {key}: {new_value}')
-
+            if old_value == '':
+                lines.append(f'{indent}  - {key}:')
+            else:
+                lines.append(f'{indent}  - {key}: {old_value}')
+            if new_value == '':
+                lines.append(f'{indent}  + {key}:')
+            else:
+                lines.append(f'{indent}  + {key}: {new_value}')
+    
     result = '{\n' + '\n'.join(lines) + f'\n{indent}}}'
     return result
 
