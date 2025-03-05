@@ -1,5 +1,5 @@
-from gendiff.formaters import format_stylish
-from gendiff.formaters import format_plain
+from gendiff.formaters import format_plain, format_stylish
+
 
 def format_diff(diff, format_name='stylish'):
     if format_name == 'stylish':
