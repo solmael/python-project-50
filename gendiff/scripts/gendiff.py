@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 import argparse
-
+import os
 from gendiff import generate_diff
 
 
@@ -22,7 +23,20 @@ def main():
                         help='set format of output')
 
     args = parser.parse_args()
-    diff = generate_diff(args.first_file, args.second_file)
+    possible_paths = [
+        os.getcwd(),
+        os.path.join(os.path.dirname(__file__), '..', '..', 
+                     'tests', 'fixtures')]
+
+    def find_file(filename):
+        for path in possible_paths:
+            full_path = os.path.join(path, filename)
+            if os.path.isfile(full_path):
+                return full_path
+
+    first_file = find_file(args.first_file)
+    second_file = find_file(args.second_file)
+    diff = generate_diff(first_file, second_file, args.format)
     print(diff)
 
 
