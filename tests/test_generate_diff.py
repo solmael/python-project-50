@@ -20,14 +20,14 @@ def read_file(file_name):
     ('file1.yml', 'file2.yml', 'json_expected.txt', 'json'),
     ('file1.json', 'file2.yml', 'json_expected.txt', 'json'),
     ('deep_file1.json', 'deep_file2.json', 'deep_expected.txt', 'stylish'),
-    ('deep_file1.yaml', 'deep_file2.yaml', 'deep_expected.txt', 'stylish'),
-    ('deep_file1.json', 'deep_file2.yaml', 'deep_expected.txt', 'stylish'),
+    ('deep_file1.yml', 'deep_file2.yml', 'deep_expected.txt', 'stylish'),
+    ('deep_file1.json', 'deep_file2.yml', 'deep_expected.txt', 'stylish'),
     ('deep_file1.json', 'deep_file2.json', 'deep_plain_expected.txt', 'plain'),
-    ('deep_file1.yaml', 'deep_file2.yaml', 'deep_plain_expected.txt', 'plain'),
-    ('deep_file1.json', 'deep_file2.yaml', 'deep_plain_expected.txt', 'plain'),
+    ('deep_file1.yml', 'deep_file2.yml', 'deep_plain_expected.txt', 'plain'),
+    ('deep_file1.json', 'deep_file2.yml', 'deep_plain_expected.txt', 'plain'),
     ('deep_file1.json', 'deep_file2.json', 'deep_json_expected.txt', 'json'),
-    ('deep_file1.yaml', 'deep_file2.yaml', 'deep_json_expected.txt', 'json'),
-    ('deep_file1.json', 'deep_file2.yaml', 'deep_json_expected.txt', 'json')
+    ('deep_file1.yml', 'deep_file2.yml', 'deep_json_expected.txt', 'json'),
+    ('deep_file1.json', 'deep_file2.yml', 'deep_json_expected.txt', 'json')
     ])
 
 def test_generate_diff(file1, file2, expected_output, format_name):
