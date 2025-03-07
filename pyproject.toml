@@ -22,5 +22,10 @@ dev = [
     "ruff>=0.9.6",
 ]
 
+[tool.uv.dependencies]
+pytest>=8.3.4
+pyyaml>=6.0.2
+ruff>=0.9.6
+
 [project.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
