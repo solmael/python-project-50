@@ -2,45 +2,52 @@ INDENT_SIZE = 4
 
 
 def format_stylish(diff, depth=0):
-    indent = ' ' * (depth)
+    indent = ' ' * depth
     lines = []
     
     for node in diff:
-        key = node['key']
+        key = node.get('key', '')
         
-        if node['type'] == 'nested':
+        if node.get('type') == 'nested':
             value = format_stylish(node['children'], depth + INDENT_SIZE)
-            lines.append(f'{indent}    {key}: {value}')
+            lines.append(f"{indent}    {key}: {value}")
             
-        elif node['type'] == 'unchanged':
-            value = format_value(node['value'], depth + INDENT_SIZE)
-            lines.append(f'{indent}    {key}: {value}')
+        elif node.get('type') == 'unchanged':
+            value_str = format_value(node['value'], depth + INDENT_SIZE)
+            lines.append(f"{indent}    {key}: {value_str}")
             
-        elif node['type'] == 'added':
-            value = format_value(node['new_value'], depth + INDENT_SIZE)
-            lines.append(f'{indent}  + {key}: {value}')
-            
-        elif node['type'] == 'removed':
-            value = format_value(node['old_value'], depth + INDENT_SIZE)
-            if value == "":
-                lines.append(f'{indent}  - {key}:')
+        elif node.get('type') == 'added':
+            value_str = format_value(node['new_value'], depth + INDENT_SIZE)
+            if value_str == '':
+                lines.append(f"{indent}  + {key}:")
             else:
-                lines.append(f'{indent}  - {key}: {value}')
+                lines.append(f"{indent}  + {key}: {value_str}")
+                
+        elif node.get('type') == 'removed':
+            value_str = format_value(node['old_value'], depth + INDENT_SIZE)
+            if value_str == '':
+                lines.append(f"{indent}  - {key}:")
+            else:
+                lines.append(f"{indent}  - {key}: {value_str}")
+                
+        elif node.get('type') == 'changed':
+            old_val = format_value(node['old_value'], depth + INDENT_SIZE)
+            new_val = format_value(node['new_value'], depth + INDENT_SIZE)
             
-        elif node['type'] == 'changed':
-            old_value = format_value(node['old_value'], depth + INDENT_SIZE)
-            new_value = format_value(node['new_value'], depth + INDENT_SIZE)
-            if old_value == "":
-                lines.append(f'{indent}  - {key}:')
+            if old_val == '':
+                lines.append(f"{indent}  - {key}:")
             else:
-                lines.append(f'{indent}  - {key}: {old_value}')
-            if new_value == "":
-                lines.append(f'{indent}  + {key}:')
+                lines.append(f"{indent}  - {key}: {old_val}")
+                
+            if new_val == '':
+                lines.append(f"{indent}  + {key}:")
             else:
-                lines.append(f'{indent}  + {key}: {new_value}')
+                lines.append(f"{indent}  + {key}: {new_val}")
+                
+    if not lines:
+        return '}'
     
-    result = '{\n' + '\n'.join(lines) + f'\n{" " * depth}}}'
-    return result
+    return '{\n' + '\n'.join(lines) + f'\n{indent}}}'
 
 
 def format_value(value, depth):
@@ -49,12 +56,13 @@ def format_value(value, depth):
     elif isinstance(value, bool):
         return str(value).lower()
     elif isinstance(value, dict):
-        indent = ' ' * (depth)
+        indent = ' ' * depth
         lines = []
-        for k, v in sorted(value.items()):
-            formatted_v = format_value(v, depth + INDENT_SIZE)
-            lines.append(f'{indent}    {k}: {formatted_v}')
-        result = '{\n' + '\n'.join(lines) + f'\n{indent}}}'
-        return result
+        for key, val in value.items():
+            formatted_value = format_value(val, depth + INDENT_SIZE)
+            lines.append(f"{indent}    {key}: {formatted_value}")
+        return '{\n' + '\n'.join(lines) + f'\n{indent}}}'
+    elif isinstance(value, str):
+        return value if value else ''
     else:
         return str(value)
