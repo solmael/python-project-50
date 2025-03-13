@@ -1,11 +1,45 @@
 INDENT_SIZE = 4
 
 
-def format_line(base_indent, prefix, key, value_str):
-    if value_str == '':
-        return f"{base_indent}{prefix}{key}:"
+def format_line(indent, prefix, key, value_str):
+    if value_str.startswith('{'):
+        return f"{indent}{prefix}{key}: {value_str}"
+    elif '\n' in value_str:
+        return f"{indent}{prefix}{key}:{value_str}"
+    elif not value_str:
+        return f"{indent}{prefix}{key}:"
+    return f"{indent}{prefix}{key}: {value_str}"
+
+
+def format_value(value, depth):
+    if value is None:
+        return 'null'
+    elif value == 'none':
+        return 'none'
+    elif isinstance(value, bool):
+        return str(value).lower()
+    elif value == '':
+        return ''
+    elif value == 0:
+        return '0'
+    elif isinstance(value, dict):
+        return format_dict(value, depth)
     else:
-        return f"{base_indent}{prefix}{key}: {value_str}"
+        return str(value)
+
+
+def format_dict(dict_value, depth):
+    indent = ' ' * (INDENT_SIZE * depth)
+    lines = []
+    for key, value in dict_value.items():
+        value_str = format_value(value, depth + 1)
+        lines.append(format_line(indent, '    ', key, value_str))
+    
+    if not lines:
+        return '{}'
+    
+    close_indent = ' ' * (INDENT_SIZE * depth)
+    return '{\n' + '\n'.join(lines) + f'\n{close_indent}}}'
 
 
 def format_stylish(diff, depth=0):
@@ -39,22 +73,3 @@ def format_stylish(diff, depth=0):
     
     result = '{\n' + '\n'.join(lines) + f'\n{indent}}}'
     return result.strip() if depth == 0 else result
-
-
-def format_value(value, depth):
-    if value is None:
-        return 'null'
-    elif isinstance(value, bool):
-        return str(value).lower()
-    elif isinstance(value, dict):
-        current_indent = ' ' * (INDENT_SIZE * depth)
-        lines = []
-        for k, v in sorted(value.items()):
-            key_indent = current_indent + ' ' * INDENT_SIZE
-            formatted_v = format_value(v, depth + 1)
-            lines.append(format_line(key_indent, '', k, formatted_v))
-        return '{\n' + '\n'.join(lines) + f'\n{current_indent}}}'
-    elif isinstance(value, str):
-        return value
-    else:
-        return str(value)
