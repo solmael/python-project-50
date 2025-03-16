@@ -70,4 +70,4 @@ make lint
 
 **Comparison of two JSON files:**
 
-![asciicast](https://asciinema.org/a/q2yg4uVZnFlpl4Qw2LE451p8q.gif)
+[![asciicast](https://asciinema.org/a/q2yg4uVZnFlpl4Qw2LE451p8q.gif)](https://asciinema.org/a/q2yg4uVZnFlpl4Qw2LE451p8q.gif)
