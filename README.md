@@ -7,16 +7,24 @@
 
 [![gendiff](https://github.com/solmael/python-project-50/actions/workflows/gendiff.yml/badge.svg)](https://github.com/solmael/python-project-50/actions/workflows/gendiff.yml)
 
-# ABOUT PROJECT 
+# About Project
 
 Compares two files in JSON/YAML formats and outputs their differences in a structured form.
+
+## Features
+- Supports JSON and YAML formats
+- Multiple output formats: stylish tree, plain text, JSON
+- Recursive processing of nested structures
+- Color highlighting for changes (+ added, - removed)
 
 ## Requirements 
 - Python >= 3.10
 - uv >= 0.5.24
 - ruff >= 0.9.6
+- pytest-cov >= 6.0.0
+- pyyaml >= 6.0.2
   
-## INSTALLATION
+## Installation
 
 To install, clone the repository:
 ```sh
@@ -35,20 +43,6 @@ Example of comparing two files:
 ```sh
 gendiff file1.json file2.json
 ```
-
-## Output Formats
-
-### Stylish
-
-The default format. Shows changes in a tree structure.
-
-### Plain
-
-A flat text format, convenient for human reading:
-
-### JSON
-
-Outputs the changes in JSON format, convenient for machine processing.
 
 ## Development
 
@@ -70,4 +64,20 @@ make lint
 
 **Comparison of two JSON files:**
 
-[![asciicast](https://asciinema.org/a/q2yg4uVZnFlpl4Qw2LE451p8q.svg)](https://asciinema.org/a/q2yg4uVZnFlpl4Qw2LE451p8q)
+[![asciicast](https://asciinema.org/a/4DRZHeuA3QfctUbgfAfvLl4Hk.svg)](https://asciinema.org/a/4DRZHeuA3QfctUbgfAfvLl4Hk)
+
+**Comparison of two YAML/YML files:**
+
+[![asciicast](https://asciinema.org/a/A2bsefLxZkCZ3L1I6wRheBapv.svg)](https://asciinema.org/a/A2bsefLxZkCZ3L1I6wRheBapv)
+
+**Comparison of two files with a recursive structure: YAML/YML or JSON:**
+
+[![asciicast](https://asciinema.org/a/TfxaRtAeE4ff0GqZuV2Z19cu7.svg)](https://asciinema.org/a/TfxaRtAeE4ff0GqZuV2Z19cu7)
+
+**Comparison of two files (plain format):**
+
+[![asciicast](https://asciinema.org/a/WqPl92c0Q4DwB1MUBNSL0awIs.svg)](https://asciinema.org/a/WqPl92c0Q4DwB1MUBNSL0awIs)
+
+**Output the comparison in JSON format:**
+
+[![asciicast](https://asciinema.org/a/hkkVLKw0FDQwaUhiIn502S0hi.svg)](https://asciinema.org/a/hkkVLKw0FDQwaUhiIn502S0hi)
