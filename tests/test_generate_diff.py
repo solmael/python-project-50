@@ -5,9 +5,11 @@ import os
 
 FIXTURES_PATH = os.path.join(os.path.dirname(__file__), 'fixtures')
 
+
 def read_file(file_name):
     with open(os.path.join(FIXTURES_PATH, file_name), 'r') as f:
         return f.read().strip()
+
 
 @pytest.mark.parametrize('file1, file2, expected_output, format_name', [
     ('file1.json', 'file2.json', 'expected.txt', 'stylish'),
@@ -28,8 +30,7 @@ def read_file(file_name):
     ('deep_file1.json', 'deep_file2.json', 'deep_json_expected.txt', 'json'),
     ('deep_file1.yml', 'deep_file2.yml', 'deep_json_expected.txt', 'json'),
     ('deep_file1.json', 'deep_file2.yml', 'deep_json_expected.txt', 'json')
-    ])
-
+])
 def test_generate_diff(file1, file2, expected_output, format_name):
     file1_path = os.path.join(FIXTURES_PATH, file1)
     file2_path = os.path.join(FIXTURES_PATH, file2)
