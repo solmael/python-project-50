@@ -35,13 +35,5 @@ def test_generate_diff(file1, file2, expected_output, format_name):
     file2_path = os.path.join(FIXTURES_PATH, file2)
     expected = read_file(expected_output)
     result = generate_diff(file1_path, file2_path, format_name)
-    
-    #expected_normalized = '\n'.join(line.strip() for line in expected.splitlines())
-    #result_normalized = '\n'.join(line.strip() for line in result.splitlines())
-    print(f'\nFormat: {format_name}')
-    print('\nexpected:')
-    print(expected)
-    print('\nactual:')
-    print(result)
+
     assert result == expected
-    #assert result_normalized == expected_normalized, f'Mismatch for {file1} and {file2}'
