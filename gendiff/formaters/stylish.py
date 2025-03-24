@@ -1,42 +1,60 @@
-def format_stylish(diff, depth=0):
-    indent = ' ' * (depth * 4)
-    result = ['{']
-    
-    for item in diff:
-        key = item['key']
-        item_type = item['type']
-        
-        if item_type == 'nested':
-            child = format_stylish(item['children'], depth + 1)
-            result.append(f"{indent}    {key}: {child}")
-        elif item_type == 'unchanged':
+def get_indent(depth):
+    return ' ' * (depth * 4)
+
+
+def format_block(lines, depth):
+    indented_lines = [f'{get_indent(depth)}{line}' for line in lines]
+    indented_lines.append(f'{get_indent(depth)}}}')
+    return '\n'.join(indented_lines)
+
+
+def add_braces(content):
+    return f'{{\n{content}'
+
+
+def format_item(item, depth):
+    key = item['key']
+    item_type = item['type']
+    match item_type:
+        case 'nested':
+            children = format_stylish(item['children'], depth + 1)
+            return [f'    {key}: {children}']
+        case 'unchanged':
             value = format_value(item['value'], depth + 1)
-            result.append(f"{indent}    {key}: {value}")
-        elif item_type == 'added':
+            return [f'    {key}: {value}']
+        case 'added':
             value = format_value(item['new_value'], depth + 1)
-            result.append(f"{indent}  + {key}: {value}")
-        elif item_type == 'removed':
+            return [f'  + {key}: {value}']
+        case 'removed':
             value = format_value(item['old_value'], depth + 1)
-            result.append(f"{indent}  - {key}: {value}")
-        elif item_type == 'changed':
+            return [f'  - {key}: {value}']
+        case 'changed':
             old_val = format_value(item['old_value'], depth + 1)
             new_val = format_value(item['new_value'], depth + 1)
-            result.append(f"{indent}  - {key}: {old_val}")
-            result.append(f"{indent}  + {key}: {new_val}")
-    
-    result.append(f"{indent}}}")
-    return '\n'.join(result)
+            return [
+                f'  - {key}: {old_val}',
+                f'  + {key}: {new_val}'
+            ]
+        case _:
+            raise ValueError(f'Unknown type: {item_type}')
+
+
+def format_stylish(diff, depth=0):
+    lines = []
+    for item in diff:
+        lines.extend(format_item(item, depth))
+    block = format_block(lines, depth)
+    return add_braces(block)
 
 
 def format_value(value, depth):
-    indent = ' ' * (depth * 4)
     if isinstance(value, dict):
-        lines = ['{']
+        lines = []
         for k, v in value.items():
-            formatted = format_value(v, depth + 1)
-            lines.append(f"{indent}    {k}: {formatted}")
-        lines.append(f"{indent}}}")
-        return '\n'.join(lines)
+            formatted_v = format_value(v, depth + 1)
+            lines.append(f'    {k}: {formatted_v}')
+        block = format_block(lines, depth)
+        return add_braces(block)
     elif value is None:
         return 'null'
     elif isinstance(value, bool):
