@@ -8,3 +8,5 @@ dist/
 coverage.xml
 *_cache/
 some_draft.py
+.python-version
+.coverage 
