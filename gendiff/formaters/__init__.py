@@ -1,9 +1,14 @@
-from .json import format_json
-from .plain import format_plain
-from .stylish import format_stylish
+from .json import get_format_json
+from .plain import get_format_plain
+from .stylish import get_format_stylish
 
-__all__ = [
-    'format_json',
-    'format_stylish',
-    'format_plain'
-]
+
+def format_diff(diff, format_name='stylish'):
+    formatters = {
+        'stylish': get_format_stylish,
+        'plain': get_format_plain,
+        'json': get_format_json
+    }
+    
+    formatter = formatters.get(format_name)
+    return formatter(diff)
