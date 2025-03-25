@@ -62,3 +62,7 @@ def format_value(value, depth):
     elif value == '':
         return ''
     return str(value)
+
+
+def get_format_stylish(diff):
+    return format_stylish(diff)

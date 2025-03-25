@@ -34,3 +34,7 @@ def check_value(value):
             return f"'{value}'"
         case _:
             return str(value)
+        
+
+def get_format_plain(diff):
+    return format_plain(diff)
