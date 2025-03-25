@@ -9,7 +9,4 @@ def format_diff(diff, format_name='stylish'):
     }
     
     formatter = formatters.get(format_name)
-    if formatter:
-        return formatter(diff)
-    else:
-        raise ValueError(f"Unsupported format: {format_name}")
+    return formatter(diff)
