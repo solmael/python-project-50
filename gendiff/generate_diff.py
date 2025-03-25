@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from gendiff.build_diff import build_diff
-from gendiff.format_diff import format_diff
+from gendiff.formaters import format_diff
 from gendiff.parser import parse_file
 
 SUPPORTED_FORMATS = {'.json', '.yml', '.yaml'}
