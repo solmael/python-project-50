@@ -1,5 +1,5 @@
 def build_diff(dict1, dict2):
-    keys = sorted(set(dict1.keys()) | set(dict2.keys()))
+    keys = sorted(dict1.keys() | dict2.keys())
     diff = []
     
     for key in keys:
