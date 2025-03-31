@@ -8,7 +8,9 @@ def parse_file(file, format):
         return {}
     
     match format:
-        case '.json':
+        case 'json':
             return json.loads(file)
-        case '.yml' | '.yaml':
+        case 'yml' | 'yaml':
             return yaml.safe_load(file)
+        case _:
+            raise ValueError(f"Unsupported format: {format}")
