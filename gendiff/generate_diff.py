@@ -1,28 +1,26 @@
-from pathlib import Path
+import os
 
 from gendiff.build_diff import build_diff
 from gendiff.formaters import format_diff
 from gendiff.parser import parse_file
 
-SUPPORTED_FORMATS = {'.json', '.yml', '.yaml'}
+
+def get_extension(file_path):
+    extension = os.path.splitext(file_path)[1]
+    return extension[1:]
 
 
-def generate_diff(path_file1, path_file2,
-                  format_name='stylish'):
-    file1, format1 = read_file(path_file1)
-    file2, format2 = read_file(path_file2)
-    parced_file1 = parse_file(file1, format1)
-    parced_file2 = parse_file(file2, format2)
-    diff = build_diff(parced_file1, parced_file2)
-    return format_diff(diff, format_name)
+def get_file_data(file_path):
+    with open(file_path, 'r') as file:
+        file_content = file.read()
+    return parse_file(file_content, get_extension(file_path))
 
 
-def read_file(path_file):
-    format = Path(path_file).suffix.lower()
-    if format not in SUPPORTED_FORMATS:
-        raise ValueError(f"Unsupported format: {format}")
-    
-    with open(path_file, 'r') as f:
-        data = f.read()
-    
-    return data, format
+def generate_diff(file1_path, file2_path, format_name='stylish'):
+    data1 = get_file_data(file1_path)
+    data2 = get_file_data(file2_path)
+    diff_tree = build_diff(data1, data2)
+    formatted_diff = format_diff(diff_tree, format_name)
+    return formatted_diff
+
+
