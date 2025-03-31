@@ -14,6 +14,7 @@ def expected(request):
 
 #  уменьшил количество проверок. покрытие, вроде, должно остаться таким же
 #  или нужно как-то иначе их записать?
+
 @pytest.mark.parametrize('format_name, input_files, expected', [
     # stylish
     ('stylish', 
